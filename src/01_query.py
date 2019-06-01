@@ -23,13 +23,17 @@ class UserModel(Model):
     email = UnicodeAttribute()
 
 
-# UserModel.delete_table()
-if not UserModel.exists():
-    UserModel.create_table()
-for first_name, last_name in [("Stephanie", "Miller"), ("Stephanie", "Nelson"), ("Katherine", "Harris"),
-                              ("Mark", "Galvan"), ("Mark", "Friedman"), ("Jacob", "Erickson")]:
-    user = UserModel(first_name, last_name=last_name, email=first_name + "@163.com")
-    user.save()
+def create_data():
+    UserModel.delete_table()
+    if not UserModel.exists():
+        UserModel.create_table()
+    for first_name, last_name in [("Stephanie", "Miller"), ("Stephanie", "Nelson"), ("Katherine", "Harris"),
+                                  ("Mark", "Galvan"), ("Mark", "Friedman"), ("Jacob", "Erickson")]:
+        user = UserModel(first_name, last_name=last_name, email=first_name + "@163.com")
+        user.save()
+
+
+# create_data()
 n = UserModel.count()
 print("data size {}".format(n))
 print("query")
@@ -40,3 +44,19 @@ for user in UserModel.query('Stephanie'):
 for user in UserModel.query("Stephanie", UserModel.last_name.startswith("M")):
     print("Stephanie startswith M ")
     print(user.first_name, user.last_name)
+
+for user in UserModel.query('Stephanie', UserModel.last_name.startswith('M')):
+    print(user)
+
+# Counting Items
+print(UserModel.count('Stephanie', UserModel.last_name.startswith('M')))
+
+# Counts also work for indexes:
+# print(UserModel.custom_index.count('my_hash_key'))
+# print(UserModel.count())
+
+# when hash_key is None raises a ValueError
+print(UserModel.count(UserModel.last_name == 'John'))
+
+# returns count of only the matching users
+print(UserModel.count('my_hash_key', UserModel.first_name == 'John'))
