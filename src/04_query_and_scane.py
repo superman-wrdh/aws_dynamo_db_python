@@ -1,3 +1,4 @@
+# https://pynamodb.readthedocs.io/en/latest/batch.html
 # Query Filters
 # You can query items from your table using a simple syntax:
 from project_setting import User
