@@ -1,4 +1,3 @@
-from create_data import user_data
 from pynamodb.indexes import LocalSecondaryIndex, AllProjection
 from pynamodb.models import Model
 from pynamodb.attributes import (
@@ -6,6 +5,7 @@ from pynamodb.attributes import (
 )
 from project_setting import DB_HOST, REGION
 from datetime import datetime
+from create_data import user_data
 
 
 class PhoneIndex(LocalSecondaryIndex):
@@ -68,5 +68,13 @@ def create_data():
     print("数据总数", User.count())
 
 
+# create_data()
+
+def index_query():
+    for u1 in User.phone_index.query("0"):
+        print(u1.no, u1.first_name, u1.last_name)
+    print(list(User.phone_index.query("1", limit=1)))
+
+
 if __name__ == '__main__':
-    create_data()
+    index_query()
