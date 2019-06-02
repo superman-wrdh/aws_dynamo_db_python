@@ -10,7 +10,7 @@ REGION = "us-west-1"
 
 def list_table():
     from pynamodb.connection import Connection
-    conn = Connection(host=DB_HOST)
+    conn = Connection(host=DB_HOST, region=REGION)
     tables = conn.list_tables()
     print(tables)
     return tables
@@ -61,3 +61,7 @@ class User(Model):
 
     phone_index = PhoneIndex()
     zipcode_index = ZipCodeIndex()
+
+
+if __name__ == '__main__':
+    list_table()
