@@ -8,7 +8,7 @@ for item in User.query('2', User.first_name.startswith('a')):
     print("Query returned item {0}".format(item))
 
 # Additionally, you can filter the results before they are returned using condition expressions:
-for item in User.query('3', User.first_name == 'Subject', User.views > 0):
+for item in User.query('3', User.first_name == 'Subject', User.birthday > datetime(1990, 1, 1)):
     print("Query returned item {0}".format(item))
 
 # DynamoDB only allows the following conditions on range keys:
@@ -26,3 +26,5 @@ for item in User.scan(User.last_name.startswith('Re') & (User.birthday > datetim
 
 for item in User.query('66', User.first_name.startswith('Mi'), limit=5):
     print("Query returned item {0}".format(item))
+
+# TODO 上面例子待测试
